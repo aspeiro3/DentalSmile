@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Doctor Specializations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @doctor_specializations.each do |doctor_specialization| %>
+      <tr>
+        <td><%= link_to 'Show', doctor_specialization %></td>
+        <td><%= link_to 'Edit', edit_doctor_specialization_path(doctor_specialization) %></td>
+        <td><%= link_to 'Destroy', doctor_specialization, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Doctor Specialization', new_doctor_specialization_path %>

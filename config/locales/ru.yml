@@ -1,0 +1,70 @@
+ru:
+  # Перевод моделей
+  activerecord:
+    models:
+      user: 'Пользователь'
+      doctor: 'Доктор'
+      appointment: 'Запись'
+      specialization: 'Специализация'
+      doctor_specialization: 'Специализация врача'
+
+    # Перевод названий аттрибутов моделей
+    attributes:
+      user:
+        email: 'Email'
+        name: 'Имя'
+        avatar: 'Аватарка'
+        password: 'Пароль'
+        password_confirmation: 'Подтверждение пароля'
+      doctor:
+        email: 'Email'
+        name: 'Имя'
+        avatar: 'Аватарка'
+        password: 'Пароль'
+        password_confirmation: 'Подтверждение пароля'
+      appointment:
+        comment: 'Рекомендация'
+      specialization:
+        title: 'Специализация'
+
+  # Перевод сообщений, которые отправляет контроллер
+  controllers:
+    users:
+      updated: 'Вы обновили свой профиль.'
+    doctors:
+      updated: 'Вы обновили свой профиль.'
+    appointments:
+      destroyed: 'Запись на прием отменена.'
+      create:
+        created: 'Вы записались на прием.'
+        error: 'Запись к этому врачу уже есть! Дождитесь сначала рекомендацию.'
+      update:
+        updated: 'Рекомендация отправлена.'
+        error: 'Отправлять рекомендации может только зарегистрированный доктор.'
+    specializations:
+      create:
+        created: 'Специализация добавлена'
+        error: 'Что-то пошло не так :('
+      update:
+        updated: 'Специализация обновлена'
+        error: 'Что-то пошло не так :('
+      destroyed: 'Специализация удалена'
+    doctor_specializations:
+      create:
+        created: 'К врачу добавлена специализация'
+        error: 'Что-то пошло не так :('
+      update:
+        updated: 'Специализация врача обновлена'
+        error: 'Что-то пошло не так :('
+      destroyed: 'Специализация врача удалена'
+
+  # Перевод сообщений, которые отправляют представления
+  users:
+    show:
+      destroy_confirm: 'Вы уверены, что хотите отменить запись?'
+
+  # Склонятор
+  error:
+    one: '%{count} ошибка'
+    few: '%{count} ошибки'
+    many: '%{count} ошибок'

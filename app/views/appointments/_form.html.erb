@@ -1,0 +1,7 @@
+<%= form_for appointment do |f| %>
+<%= render partial: 'partials/form_errors', locals: {model: appointment} %>
+<%= f.hidden_field :doctor_id, value: "#{@doctor_id}" %>
+<div class="actions">
+  <h2><%= f.submit 'Записаться на прием', class: 'mt-2 btn-lg btn-outline-info' %></h2>
+</div>
+<% end %>

@@ -1,0 +1,62 @@
+<h3 class="rounded text-center mt-1 p-3 mb-2 bg-secondary text-white">
+  Картинки, описание, врачи, бла-бла-бла
+</h3>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <% @doctors.each do |doctor| %>
+      <div class="m-2 d-flex flex-column col-12 col-md-5 col-lg-4 text-center border rounded p-3 shadow-sm text-center">
+        <div>
+          <% if doctor.specializations.present? %>
+            <% if user_signed_in? %>
+              <div class="d-flex flex-wrap justify-content-center">
+                <% doctor.specializations.each do |specialization| %>
+                  <div class="btn btn-light border rounded-pill shadow-sm mr-2 mt-2">
+                    <%= link_to specialization do %>
+                      <div >
+                        <another div>
+                          <%= specialization[:title].capitalize %>
+                        </another div>
+                      </div>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            <% else %>
+              <div class="d-flex justify-content-center">
+                <% doctor.specializations.each do |specialization| %>
+                  <div class="border rounded-pill shadow-sm mr-2">
+                    <p class="p-1 m-0"><%= specialization.title.capitalize %></p>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+
+        <div class="mt-3">
+          <span class="user-avatar">
+            <%= image_tag avatar(doctor), class: 'mb-4 img-icon-max rounded' %>
+          </span>
+        </div>
+
+        <div class="footer">
+          <% if user_signed_in? %>
+            <%= link_to doctor_path(doctor) do %>
+              <div class="linkable pl-4 pr-4 pt-2 pb-2 border rounded shadow-sm">
+                <another div>
+                  <%= doctor.name %>
+                </another div>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="border rounded-pill shadow-sm mr-2">
+              <p class="p-1 m-0"><em><%= doctor.name %></em></p>
+            </div>
+          <% end %>
+        </div>
+
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<h3 class="rounded text-center mt-1 p-3 mb-2 bg-secondary text-white">
+  <%= @specialization[:title].capitalize %>
+</h3>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <% @specialization.doctors.each do |doctor| %>
+
+      <div class="m-2 d-flex flex-column col-12 col-md-5 col-lg-4 text-center border rounded p-3 shadow-sm text-center transition">
+
+        <div class="mt-3">
+          <span class="user-avatar">
+            <%= image_tag avatar(doctor), class: 'mb-4 img-icon-max rounded' %>
+          </span>
+        </div>
+
+        <div class="footer">
+          <% if user_signed_in? %>
+            <%= link_to doctor_path(doctor) do %>
+              <div class="linkable pl-4 pr-4 pt-2 pb-2 border rounded shadow-sm stretched-link">
+                  <another div>
+                    <%= doctor.name %>
+                  </another div>
+              </div>
+            <% end %>
+          <% else %>
+            <em><%= doctor.name %></em>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

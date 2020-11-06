@@ -1,0 +1,17 @@
+<%= form_with(model: doctor_specialization, local: true) do |form| %>
+  <% if doctor_specialization.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(doctor_specialization.errors.count, "error") %> prohibited this doctor_specialization from being saved:</h2>
+
+      <ul>
+        <% doctor_specialization.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

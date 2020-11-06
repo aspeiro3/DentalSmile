@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "DentalSmile" %></title>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_pack_tag "application" %>
+    <%= javascript_pack_tag "application" %>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4 pt-0 pb-0 fixed-top opacity shadow-sm">
+      <div class="container">
+
+        <%= link_to "DentalSmile", root_path, class: "navbar-brand pl-sm-3 pl-lg-0 pt-2 pb-2 effect" %>
+
+        <button class="navbar-toggler mt-2 mb-2" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav ml-auto float-right">
+
+            <% if signed_in? %>
+
+              <% if doctor_signed_in? %>
+                <li class="p-2"><%= link_to 'Профиль', doctor_path(current_doctor), class: 'a-none effect' %></li>
+                <li class="p-2"><%= link_to 'Выйти', destroy_doctor_session_path, method: :delete, class: 'float-right a-none effect' %></li>
+              <% elsif user_signed_in? %>
+                <li class="p-2"><%= link_to 'Профиль', user_path(current_user), class: 'a-none effect' %></li>
+                <li class="p-2"><%= link_to 'Выйти', destroy_user_session_path, method: :delete, class: 'float-right a-none effect' %></li>
+              <% end %>
+
+            <% else %>
+
+              <div class="dropdown text-right">
+                <a class="btn effect" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Войти
+                </a>
+                <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuLink">
+                  <li class="border rounded shadow-sm">
+                    <%= link_to new_user_session_path do %>
+                      <div class="linkable pl-4 pr-4 pt-2 pb-2">
+                        <another div>
+                          Пациент
+                        </another div>
+                      </div>
+                    <% end %>
+                  </li>
+
+                  <li class="border rounded shadow-sm">
+                    <%= link_to new_doctor_session_path do %>
+                      <div class="linkable pl-4 pr-4 pt-2 pb-2">
+                        <another div>
+                          Доктор
+                        </another div>
+                      </div>
+                    <% end %>
+                  </li>
+                </div>
+              </div>
+
+              <li class="p-2 mb-1"><%= link_to 'Зарегистрироваться', new_user_registration_path, class: 'a-none effect' %></li>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mt-5 mb-3">
+      <div class="row">
+        <div class="col-lg-12 mt-4">
+          <%= bootstrap_flash %>
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

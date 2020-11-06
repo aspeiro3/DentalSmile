@@ -1,0 +1,93 @@
+<div class="text-center border rounded p-3 shadow">
+  <h1><%= @doctor.name %></h1>
+
+  <%= image_tag avatar(@doctor), class: 'rounded width-img border border-info shadow-sm' %>
+
+  <% if user_signed_in? %>
+    <div class="text-center">
+      <%= render partial: 'appointments/form', locals: {
+        appointment: @new_appointment || Appointment.new
+      } %>
+    </div>
+  <% end %>
+
+  <% if @doctor == current_doctor %>
+    <p class="buffer-top">
+      <%= link_to "Редактировать профиль", edit_doctor_path(@doctor), class: 'btn btn-outline-secondary' %>
+    </p>
+  <% end %>
+</div>
+
+<% if @doctor == current_doctor %>
+  <% doctor_appointments = appointments_comments_nil_limit_10(@doctor) %>
+  <% doctor_appointments_all = appointments_all_comments_nil(@doctor) %>
+
+  <div class="d-flex justify-content-center">
+    <div class="pl-0 pr-0 background-color col-12 mt-3 mb-3">
+      <div id="container">
+        <div class="rounded text-center" id="something-else">
+          <h5 class="m-0 pt-2">Список пациентов:</h5>
+        </div>
+        <div class="p-2" id="overflow">
+
+          <% if doctor_appointments.count == 0 %>
+            <div class="text-center">
+              Записей нет.
+              <br>
+              <%= image_tag asset_pack_path('media/images/cup.png'), class: 'img-icon' %>
+              <br>
+              Можно выпить кофеек :)
+            </div>
+          <% else %>
+            <% doctor_appointments_all.each.with_index(1) do |appointment, index| %>
+              <div class="rounded shadow-sm pb-1">
+                <p class="m-0 pl-2 pb-2 pt-3">
+                  <%= image_tag avatar(appointment.user), class: 'img-icon-small' %>
+                  <%= link_to appointment.user.name, user_path(appointment.user) %>
+                   <em class="float-right pr-2">№ <%= index %></em>
+                </p>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <% if doctor_appointments.count != 0 %>
+      <h3 class="rounded text-center mt-4 p-3 mb-2 bg-secondary text-white">
+        Ожидаются рекомендации
+      </h3>
+    <% end %>
+
+    <% doctor_appointments.each.with_index(1) do |appointment, index| %>
+      <div class="row border rounded p-3 shadow-sm mb-2">
+        <div class="col-12 col-sm-4 col-md-3 col-xl-2 text-center">
+          <p><%= link_to appointment.user.name, user_path(appointment.user),
+            class: 'stretched-link' %></p>
+          <%= image_tag avatar(appointment.user), class: 'img-icon' %>
+          <br>
+          <small><%= l appointment.created_at, format: :long %></small>
+        </div>
+
+        <div class="col-12 col-sm-8 col-md-9 col-xl-10 border rounded p-3 shadow-sm background-color">
+          <%= form_for appointment do |f| %>
+            <%= render partial: 'partials/form_errors', locals: {model: appointment} %>
+
+            <div class="form-group text-left">
+              <%= f.label :comment %>
+              <%= f.text_area :comment, class: 'form-control shadow-sm' %>
+            </div>
+
+            <em class="float-right pr-2">№ <%= index %></em>
+
+            <div class="actions">
+              <%= f.submit 'Отправить', class: 'btn btn-primary' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

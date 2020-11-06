@@ -1,0 +1,99 @@
+<div class="border rounded p-3 shadow text-center mb-3">
+  <h1><%= @user.name %></h1>
+
+  <%= image_tag avatar(@user), class: 'rounded width-img' %>
+
+  <% if @user == current_user %>
+    <p class="buffer-top">
+      <%= link_to "Редактировать профиль", edit_user_path(@user), class: 'btn btn-outline-secondary' %>
+    </p>
+
+    <div class="btn-group">
+      <button type="button" class="border border-info mt-2 btn-lg btn-outline-info" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Записаться на прием
+      </button>
+      <div class="dropdown-menu">
+        <% specializations = specialization_all %>
+
+        <% specializations.each do |specialization| %>
+          <a class="dropdown-item" href="#">
+            <%= link_to specialization do %>
+              <div class="linkable pl-4 pr-4 pt-2 pb-2 border rounded shadow-sm">
+                <another div>
+                  <%= specialization[:title].capitalize %>
+                </another div>
+              </div>
+            <% end %>
+          </a>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<% if @user == current_user %>
+
+  <% if @user.appointments.count == 0 %>
+    <h1 class="text-center mt-3">У вас нет активных записей</h1>
+  <% else %>
+    <h1 class="text-center mt-4">Ваши записи:</h1>
+  <% end %>
+
+  <div class="container">
+    <% user_appointments_comments_nil = user_appointments_comments_nil(@user)%>
+    <% user_appointments_comments_not_nil = user_appointments_comments_not_nil(@user) %>
+
+    <% if user_appointments_comments_nil.count != 0 %>
+      <h3 class="rounded text-center mt-3 p-3 mb-2 bg-secondary text-white">Ожидаются рекомендации врачей</h3>
+    <% end %>
+
+    <% @user.appointments.each do |appointment| %>
+      <% if user_appointments_comments_nil.include?(appointment) %>
+        <div class="row border rounded p-3 shadow-sm mb-2">
+          <div class="col-12 col-sm-4 col-md-3 col-xl-2 text-center">
+            <p><%= appointment.doctor.name %></p>
+            <%= image_tag avatar(appointment.doctor), class: 'img-icon' %>
+            <br>
+            <small><%= l appointment.created_at, format: :long %></small>
+            <br>
+            <% if appointment.comment == nil %>
+              <p class="btn btn-outline-secondary mt-3">
+                Отменить
+                <%= link_to(
+                  fa_icon('trash'), appointment_path(appointment),
+                  method: :delete, data: {confirm: t('.destroy_confirm')},
+                  class: 'stretched-link')
+                %>
+              </p>
+            <% end %>
+          </div>
+
+          <div class="col-12 col-sm-8 col-md-9 col-xl-10 border rounded p-3 shadow-sm background-color">
+            <p class="text-info">Еще нет рекомендации от врача</p>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
+    <% unless user_appointments_comments_not_nil.count == 0 %>
+      <h3 class="rounded text-center mt-5 p-3 mb-2 bg-secondary text-white">Все рекомендаций</h3>
+    <% end %>
+
+    <% @user.appointments.order(updated_at: :desc).each do |appointment| %>
+    <% unless user_appointments_comments_nil.include?(appointment) %>
+      <div class="row border rounded p-3 shadow">
+        <div class="col-12 col-sm-4 col-md-3 col-xl-2 text-center">
+          <p><%= appointment.doctor.name %></p>
+          <%= image_tag avatar(appointment.doctor), class: 'img-icon' %>
+          <br>
+          <small><%= l appointment.created_at, format: :long %></small>
+        </div>
+
+        <div class="col-12 col-sm-8 col-md-9 col-xl-10 border rounded p-3 shadow-sm background-color">
+          <%= appointment.comment %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+  </div>
+<% end %>
