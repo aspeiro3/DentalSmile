@@ -18,13 +18,13 @@
           <% if user_signed_in? %>
             <%= link_to doctor_path(doctor) do %>
               <div class="linkable pl-4 pr-4 pt-2 pb-2 border rounded shadow-sm stretched-link">
-                  <another div>
-                    <%= doctor.name %>
-                  </another div>
+                <another div>
+                  <%= doctor.name %>
+                </another div>
               </div>
             <% end %>
           <% else %>
-            <em><%= doctor.name %></em>
+            <%= doctor.name %>
           <% end %>
         </div>
       </div>

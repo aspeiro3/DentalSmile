@@ -8,7 +8,6 @@ class User < ApplicationRecord
   has_many :doctors, through: :appointments
 
   validates :name, presence: true, length: { maximum: 35 }
-  
   before_validation :set_name, on: :create
 
   private
