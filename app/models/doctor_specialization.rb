@@ -2,11 +2,11 @@ class DoctorSpecialization < ApplicationRecord
   belongs_to :doctor
   belongs_to :specialization
 
-  validate :doctor_cannot_have_the_same_specialization_several_times, on: :create
+  validate :validates_only_one_specialization, on: :create
 
   private
 
-  def doctor_cannot_have_the_same_specialization_several_times
+  def validates_only_one_specialization
     errors.add(:doctor_id) if
         DoctorSpecialization.
         where(specialization_id: specialization_id).
