@@ -1,6 +1,8 @@
 ActiveAdmin.register Specialization do
   permit_params :title
 
+  actions :all, except: [:show, :destroy]
+
   index do
     id_column
     column :title

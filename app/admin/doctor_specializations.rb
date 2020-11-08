@@ -1,6 +1,8 @@
 ActiveAdmin.register DoctorSpecialization do
   permit_params :doctor_id, :specialization_id
 
+  actions :all, except: :show
+
   index do
     id_column
     column :doctor
