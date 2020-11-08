@@ -15,7 +15,6 @@ gem 'carrierwave'
 gem 'rmagick'
 gem 'fog-aws'
 gem 'uglifier'
-
 gem 'activeadmin'
 gem 'cancancan'
 gem 'draper'

@@ -11,7 +11,7 @@ class Ability
     end
 
     if user
-      can :read, [User, Doctor, Appointment], id: user.id
+      can :read, [User, Doctor, Appointment]
       can [:create, :update, :destroy],  User, id: user.id
       can [:create, :destroy], Appointment
     end
