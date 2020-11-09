@@ -22,7 +22,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav ml-auto float-right">
 
-            <% if signed_in? %>
+            <% if signed_in?%>
 
               <% if doctor_signed_in? %>
                 <li class="p-2"><%= link_to 'Профиль', doctor_path(current_doctor), class: 'a-none effect' %></li>
@@ -30,6 +30,9 @@
               <% elsif user_signed_in? %>
                 <li class="p-2"><%= link_to 'Профиль', user_path(current_user), class: 'a-none effect' %></li>
                 <li class="p-2"><%= link_to 'Выйти', destroy_user_session_path, method: :delete, class: 'float-right a-none effect' %></li>
+              <% elsif admin_user_signed_in? %>
+                <li class="p-2"><%= link_to 'Профиль', admin_root, class: 'a-none effect' %></li>
+                <li class="p-2"><%= link_to 'Выйти', destroy_admin_user_session, method: :delete, class: 'float-right a-none effect' %></li>
               <% end %>
 
             <% else %>
